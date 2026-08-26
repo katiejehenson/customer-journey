@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Journey & Tern Workflows</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3EE7C6;
+            --secondary: #7CE9E5;
+            --light: #B1E9F3;
+            --navy: #2B4A6F;
+            --white: #FFFFFF;
+            --gray-light: #F5F9FB;
+            --gray-dark: #4A5568;
+            --font-family: 'Raleway', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--gray-dark);
+            background: linear-gradient(135deg, var(--navy) 0%, #1a2d45 100%);
+        }
+
+        header {
+            background: linear-gradient(90deg, var(--navy) 0%, #1f3a52 100%);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-placeholder {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            background: var(--primary);
+            color: var(--navy);
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+            color: var(--navy);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .phase-card {
+            background: var(--gray-light);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(62, 231, 198, 0.2);
+        }
+
+        .phase-title {
+            color: var(--navy);
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .phase-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--navy);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .phase-items {
+            list-style: none;
+        }
+
+        .phase-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.95em;
+        }
+
+        .phase-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-label {
+            color: var(--primary);
+            font-weight: 600;
+            display: block;
+        }
+
+        .item-details {
+            color: var(--gray-dark);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-phase {
+            background: var(--white);
+            border-left: 4px solid var(--primary);
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .timeline-phase h3 {
+            color: var(--navy);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-badge {
+            background: var(--secondary);
+            color: var(--navy);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .workflow-list {
+            list-style: none;
+            margin-left: 20px;
+        }
+
+        .workflow-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .workflow-item:last-child {
+            border-bottom: none;
+        }
+
+        .workflow-task {
+            color: var(--navy);
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .workflow-meta {
+            color: var(--gray-dark);
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .automation-badge {
+            display: inline-block;
+            background: #E8F4F8;
+            color: var(--navy);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .key-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--light) 100%);
+            color: var(--navy);
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .metric-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-label {
+            font-size: 0.95em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            color: var(--white);
+            font-size: 2em;
+            font-weight: 700;
+            margin: 40px 0 30px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(62, 231, 198, 0.1) 0%, rgba(177, 233, 243, 0.1) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            color: var(--white);
+        }
+
+        .info-box strong {
+            color: var(--primary);
+        }
+
+        footer {
+            background: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 3px solid var(--primary);
+            margin-top: 60px;
+        }
+
+        .phase-connect {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 2em;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                width: 100%;
+            }
+
+            .phases {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-placeholder">🧳 TN TRAVELS</div>
+            <h1>Customer Journey & Tern Workflows</h1>
+            <p>A comprehensive guide for advisors navigating the client experience</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('generic')">Generic Journey</button>
+            <button class="tab-button" onclick="showTab('tern')">Tern Workflows</button>
+            <button class="tab-button" onclick="showTab('comparison')">Side by Side</button>
+        </div>
+
+        <!-- Generic Customer Journey -->
+        <div id="generic" class="tab-content active">
+            <h2 class="section-title">Standard Customer Journey</h2>
+            
+            <div class="info-box">
+                <strong>Overview:</strong> This journey maps the typical lifecycle of a client from initial inquiry through post-trip follow-up, with standard timelines and responsibilities.
+            </div>
+
+            <div class="phases">
+                <!-- Discovery Phase -->
+                <div class="phase-card">
+                    <h3 class="phase-title">
+                        <span class="phase-badge">1</span> Discovery
+                    </h3>
+                    <ul class="phase-items">
+                        <li class="phase-item">
+                            <span class="item-label">New Client Inquiry</span>
+                            <span class="item-details">Platforms: Outlook, Calendly</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Discovery Call Email</span>
+                            <span class="item-details">Within 30 minutes of inquiry</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Discovery Call</span>
+                            <span class="item-details">Within 1-2 weeks via Calendly</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Service Fee Invoice</span>
+                            <span class="item-details">Within 48 hours of call</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">CRM & Itinerary Setup</span>
+                            <span class="item-details">Within 24 hours of confirmation</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Supplier Outreach</span>
+                            <span class="item-details">24-48 hours after call</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Proposal Phase -->
+                <div class="phase-card">
+                    <h3 class="phase-title">
+                        <span class="phase-badge">2</span> Proposal
+                    </h3>
+                    <ul class="phase-items">
+                        <li class="phase-item">
+                            <span class="item-label">Quote Received</span>
+                            <span class="item-details">1-2 weeks from suppliers</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Create Proposal</span>
+                            <span class="item-details">3-5 days after quote (usually 1-2 days)</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Send Proposal</span>
+                            <span class="item-details">Via Travefy</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Travel Insurance Quote</span>
+                            <span class="item-details">Optional, discuss with client</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Proposal Revisions</span>
+                            <span class="item-details">As needed per client</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Approval</span>
+                            <span class="item-details">Client approval via Travefy or email</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Booking Phase -->
+                <div class="phase-card">
+                    <h3 class="phase-title">
+                        <span class="phase-badge">3</span> Booking
+                    </h3>
+                    <ul class="phase-items">
+                        <li class="phase-item">
+                            <span class="item-label">Initial Bookings</span>
+                            <span class="item-details">1-3 days after proposal approval</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Formal Itinerary</span>
+                            <span class="item-details">1-5 days after bookings</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Second Round Bookings</span>
+                            <span class="item-details">1-5 months after initial</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Registration Tasks</span>
+                            <span class="item-details">Rewards programs, visas, essentials</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Destination Phase -->
+                <div class="phase-card">
+                    <h3 class="phase-title">
+                        <span class="phase-badge">4</span> Destination
+                    </h3>
+                    <ul class="phase-items">
+                        <li class="phase-item">
+                            <span class="item-label">Destination Email #1</span>
+                            <span class="item-details">7-5 months before trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Destination Email #2</span>
+                            <span class="item-details">4-3 months before trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Packing List & Tips</span>
+                            <span class="item-details">Sent with affiliate links</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pre-Trip Phase -->
+                <div class="phase-card">
+                    <h3 class="phase-title">
+                        <span class="phase-badge">5</span> Pre-Trip
+                    </h3>
+                    <ul class="phase-items">
+                        <li class="phase-item">
+                            <span class="item-label">Confirm with Suppliers</span>
+                            <span class="item-details">105 days before trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Send Itinerary & Form</span>
+                            <span class="item-details">90 days before trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Final Paperwork</span>
+                            <span class="item-details">20 days before trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Final Itinerary</span>
+                            <span class="item-details">14 days before trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Check-In & Bon Voyage</span>
+                            <span class="item-details">24-48 hours before trip</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Traveling Phase -->
+                <div class="phase-card">
+                    <h3 class="phase-title">
+                        <span class="phase-badge">6</span> Traveling
+                    </h3>
+                    <ul class="phase-items">
+                        <li class="phase-item">
+                            <span class="item-label">Arrival Check-In</span>
+                            <span class="item-details">2 days after trip starts (optional)</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">On-Trip Support</span>
+                            <span class="item-details">Available as needed</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Rebooking Encouragement</span>
+                            <span class="item-details">For repeat destinations (Sandals, Cruises)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Post-Trip Phase -->
+                <div class="phase-card">
+                    <h3 class="phase-title">
+                        <span class="phase-badge">7</span> Post-Trip
+                    </h3>
+                    <ul class="phase-items">
+                        <li class="phase-item">
+                            <span class="item-label">Welcome Home Email</span>
+                            <span class="item-details">5-7 days after trip ends</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Feedback Survey</span>
+                            <span class="item-details">With review links & referral program</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Future Trip Follow-Up #1</span>
+                            <span class="item-details">30-45 days after trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">Future Trip Follow-Up #2</span>
+                            <span class="item-details">80-90 days after trip</span>
+                        </li>
+                        <li class="phase-item">
+                            <span class="item-label">6-Month Check-In</span>
+                            <span class="item-details">180 days after trip</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tern Workflows -->
+        <div id="tern" class="tab-content">
+            <h2 class="section-title">Tern Workflow Integration</h2>
+            
+            <div class="info-box">
+                <strong>Overview:</strong> Tern workflows automate and structure the customer journey with predefined tasks, automations, and communication templates. Four main workflows guide the complete trip lifecycle.
+            </div>
+
+            <!-- Starter Lead Workflow -->
+            <div class="timeline-phase">
+                <h3>
+                    Starter Lead Workflow
+                    <span class="timeline-badge">Initial Contact</span>
+                </h3>
+                <p style="margin-bottom: 15px; color: var(--gray-dark);">Triggered when a trip is created in Tern or manually applied. Ensures follow-ups with prospective clients.</p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">
+                        <span class="workflow-task">00. Lead | Initial Contact Email</span>
+                        <span class="workflow-meta">Send inquiry form</span>
+                        <span class="automation-badge">AUTO</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">01. Lead | Initial Contact Follow-Up</span>
+                        <span class="workflow-meta">Resend inquiry form</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">02. Lead | Schedule Intake Call</span>
+                        <span class="workflow-meta">Send Calendly link</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">03. Lead | Schedule Intake Call Follow-Up</span>
+                        <span class="workflow-meta">Reminder email</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">04. Lead | Call Recap, Send Planning Invoice</span>
+                        <span class="workflow-meta">Post-call summary</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">05. Lead | Upon payment, update status to Planning</span>
+                        <span class="workflow-meta">Activates Planning Workflow</span>
+                        <span class="automation-badge">AUTO</span>
+                    </li>
+                </ul>
+                <div style="margin-top: 15px; padding: 10px; background: #f0f9f8; border-radius: 4px;">
+                    <strong style="color: var(--navy);">Automations:</strong>
+                    <ul class="workflow-list" style="margin-top: 10px;">
+                        <li>Tern Access - 2 days after trip status change to Planning</li>
+                        <li>Planning Fee Payment Confirmation - Immediately upon status change</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Starter Planning Workflow -->
+            <div class="timeline-phase">
+                <h3>
+                    Starter Planning Workflow
+                    <span class="timeline-badge">Proposal Creation</span>
+                </h3>
+                <p style="margin-bottom: 15px; color: var(--gray-dark);">Triggered when trip status changes to PLANNING. Manages proposal creation, revisions, and approval.</p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">
+                        <span class="workflow-task">00. Planning | Contact DMC / Preferred Suppliers</span>
+                        <span class="workflow-meta">Due: 4 days after task creation</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">01. Planning | Create & Send Client Proposal Email</span>
+                        <span class="workflow-meta">Due: 7 days after task creation</span>
+                        <span class="automation-badge">AUTO</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">02. Planning | Proposal Follow-Up #1 & #2</span>
+                        <span class="workflow-meta">Due: 20 days after task creation</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">03. Planning | Proposal Updates (if necessary)</span>
+                        <span class="workflow-meta">Due: 14 days after task creation</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">04. Planning | Confirm booking(s) with Supplier(s)</span>
+                        <span class="workflow-meta">Due: 7 days after task creation</span>
+                        <span class="automation-badge">AUTO</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">05. Planning | Upon Approval, update status to Booked</span>
+                        <span class="workflow-meta">Add trip tags (cruise, safari, VIP, etc.)</span>
+                        <span class="automation-badge">AUTO</span>
+                    </li>
+                </ul>
+                <div style="margin-top: 15px; padding: 10px; background: #f0f9f8; border-radius: 4px;">
+                    <strong style="color: var(--navy);">Automations:</strong>
+                    <ul class="workflow-list" style="margin-top: 10px;">
+                        <li>Proposal Approved - Upon client approval</li>
+                        <li>Travel Insurance - 2 days after status change to Planning</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Starter Payments Workflow -->
+            <div class="timeline-phase">
+                <h3>
+                    Starter Payments Workflow
+                    <span class="timeline-badge">Payment Processing</span>
+                </h3>
+                <p style="margin-bottom: 15px; color: var(--gray-dark);">Automates payment reminders and confirmations throughout the booking process.</p>
+                <div style="padding: 15px; background: #f0f9f8; border-radius: 4px;">
+                    <strong style="color: var(--navy);">Key Automations:</strong>
+                    <ul class="workflow-list" style="margin-top: 10px;">
+                        <li class="workflow-item">
+                            <span class="workflow-task">Payment Due Reminder 10 Days</span>
+                            <span class="workflow-meta">10 days before due date + creates task 5 days after</span>
+                        </li>
+                        <li class="workflow-item">
+                            <span class="workflow-task">Payment Due Reminder 1 Day</span>
+                            <span class="workflow-meta">1 day before due date + creates task</span>
+                        </li>
+                        <li class="workflow-item">
+                            <span class="workflow-task">Payment Past Due</span>
+                            <span class="workflow-meta">1 day after due date + creates follow-up task</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Starter Pre/Post Travel Workflow -->
+            <div class="timeline-phase">
+                <h3>
+                    Starter Pre/Post Travel Workflow
+                    <span class="timeline-badge">Trip Execution</span>
+                </h3>
+                <p style="margin-bottom: 15px; color: var(--gray-dark);">Triggered when trip status changes to BOOKED. Manages all pre-trip preparation and post-trip follow-up.</p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">
+                        <span class="workflow-task">00. Request Final Paperwork from Suppliers</span>
+                        <span class="workflow-meta">35 days before trip start</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">01. Pre-Travel Documents & Wrap-Up</span>
+                        <span class="workflow-meta">22 days before trip start</span>
+                        <span class="automation-badge">AUTO</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">02. Send Hotel Booking Confirmations</span>
+                        <span class="workflow-meta">7 days before trip start</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">03. Submit Commission Notes</span>
+                        <span class="workflow-meta">5 days before trip start</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">04. Review Trip Feedback</span>
+                        <span class="workflow-meta">10 days after trip end</span>
+                        <span class="automation-badge">AUTO</span>
+                    </li>
+                    <li class="workflow-item">
+                        <span class="workflow-task">05. Archive Trip</span>
+                        <span class="workflow-meta">181 days after trip end</span>
+                    </li>
+                </ul>
+                <div style="margin-top: 15px; padding: 10px; background: #f0f9f8; border-radius: 4px;">
+                    <strong style="color: var(--navy);">Key Automations:</strong>
+                    <ul class="workflow-list" style="margin-top: 10px;">
+                        <li class="workflow-item">90-Day Check-In <span class="automation-badge">AUTO</span></li>
+                        <li class="workflow-item">45-Day Check-In & Profile Refresh <span class="automation-badge">AUTO</span></li>
+                        <li class="workflow-item">24-Hour Flight Check-In Reminder <span class="automation-badge">AUTO</span></li>
+                        <li class="workflow-item">Arrival Day Check-In <span class="automation-badge">AUTO</span></li>
+                        <li class="workflow-item">Welcome Home Survey <span class="automation-badge">AUTO</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison View -->
+        <div id="comparison" class="tab-content">
+            <h2 class="section-title">Key Timelines & Responsibilities</h2>
+            
+            <div class="info-box">
+                <strong>Quick Reference:</strong> Use this comparison to understand how the generic journey aligns with Tern workflows and what happens at each stage.
+            </div>
+
+            <div class="key-metrics">
+                <div class="metric-card">
+                    <div class="metric-number">30 min</div>
+                    <div class="metric-label">Discovery Call Email</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">1-2 weeks</div>
+                    <div class="metric-label">Discovery Call Scheduled</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">3-5 days</div>
+                    <div class="metric-label">Proposal Created</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">1-3 days</div>
+                    <div class="metric-label">Booking Initiated</div>
+                </div>
+            </div>
+
+            <h3 style="color: var(--white); margin-top: 40px; font-size: 1.6em;">Advisor Responsibilities by Phase</h3>
+
+            <div class="timeline-phase">
+                <h3>Discovery Phase</h3>
+                <p><strong>Who:</strong> Advisor, VA, Other</p>
+                <p><strong>Key Actions:</strong></p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">Receive inquiry (Outlook, Calendly, Phone)</li>
+                    <li class="workflow-item">Send discovery call email within 30 min</li>
+                    <li class="workflow-item">Conduct discovery call within 1-2 weeks</li>
+                    <li class="workflow-item">Send service fee invoice within 48 hours</li>
+                    <li class="workflow-item">Research & outreach to suppliers (24-48 hours)</li>
+                </ul>
+            </div>
+
+            <div class="timeline-phase">
+                <h3>Proposal Phase</h3>
+                <p><strong>Who:</strong> Advisor, VA, Supplier</p>
+                <p><strong>Key Actions:</strong></p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">Wait for supplier quotes (1-2 weeks)</li>
+                    <li class="workflow-item">Create proposal (3-5 days, typically 1-2)</li>
+                    <li class="workflow-item">Send proposal to client via Travefy</li>
+                    <li class="workflow-item">Follow up on proposals (automated or manual)</li>
+                    <li class="workflow-item">Revise as needed per client feedback</li>
+                    <li class="workflow-item">Wait for client approval</li>
+                </ul>
+            </div>
+
+            <div class="timeline-phase">
+                <h3>Booking Phase</h3>
+                <p><strong>Who:</strong> Advisor, Supplier, VA, Client</p>
+                <p><strong>Key Actions:</strong></p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">Process credit card authorization</li>
+                    <li class="workflow-item">Book flights, hotels, activities (1-3 days after approval)</li>
+                    <li class="workflow-item">Create formal itinerary (1-5 days)</li>
+                    <li class="workflow-item">Handle second round bookings (1-5 months)</li>
+                    <li class="workflow-item">Register for loyalty programs & visas</li>
+                </ul>
+            </div>
+
+            <div class="timeline-phase">
+                <h3>Pre-Trip Phase</h3>
+                <p><strong>Who:</strong> Advisor, VA</p>
+                <p><strong>Key Actions:</strong></p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">Confirm with suppliers (105 days before)</li>
+                    <li class="workflow-item">Send special requests form (90 days before)</li>
+                    <li class="workflow-item">Send destination emails (7-4 months before)</li>
+                    <li class="workflow-item">Request final paperwork (20 days before)</li>
+                    <li class="workflow-item">Send final itinerary (14 days before)</li>
+                    <li class="workflow-item">Bon voyage check-in (24-48 hours before)</li>
+                </ul>
+            </div>
+
+            <div class="timeline-phase">
+                <h3>Post-Trip Phase</h3>
+                <p><strong>Who:</strong> Advisor, VA</p>
+                <p><strong>Key Actions:</strong></p>
+                <ul class="workflow-list">
+                    <li class="workflow-item">Welcome home email (5-7 days after)</li>
+                    <li class="workflow-item">Collect feedback & surveys</li>
+                    <li class="workflow-item">Future trip follow-up #1 (30-45 days)</li>
+                    <li class="workflow-item">Future trip follow-up #2 (80-90 days)</li>
+                    <li class="workflow-item">6-month check-in (180 days)</li>
+                    <li class="workflow-item">Referral program engagement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Travel Advisor Operations. This guide is for internal use by advisors.</p>
+        <p style="margin-top: 15px; font-size: 0.9em;">For questions or updates, contact your operations team.</p>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
