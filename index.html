@@ -61,6 +61,24 @@
             color: var(--light);
         }
 
+        .download-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--navy);
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+        }
+
+        .download-btn:hover {
+            background: transparent;
+            color: var(--primary);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -331,6 +349,154 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Template/Blank Form Styles */
+        .template-section {
+            background: var(--white);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .template-section h3 {
+            color: var(--navy);
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--navy);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="email"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--light);
+            border-radius: 5px;
+            font-family: var(--font-family);
+            font-size: 0.95em;
+            color: var(--dark_gray);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 5px rgba(62, 231, 198, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .template-btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .template-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--primary);
+            background: var(--primary);
+            color: var(--navy);
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .template-btn:hover {
+            background: transparent;
+            color: var(--primary);
+        }
+
+        .template-btn.secondary {
+            background: transparent;
+            color: var(--primary);
+        }
+
+        .template-btn.secondary:hover {
+            background: var(--primary);
+            color: var(--navy);
+        }
+
+        .template-note {
+            background: linear-gradient(135deg, rgba(62, 231, 198, 0.1) 0%, rgba(177, 233, 243, 0.1) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: var(--navy);
+            font-size: 0.95em;
+        }
+
+        .template-note strong {
+            color: var(--primary);
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            margin: 30px 0;
+        }
     </style>
 </head>
 <body>
@@ -339,6 +505,7 @@
             <div class="logo-placeholder">🧳 TN TRAVELS</div>
             <h1>Customer Journey & Tern Workflows</h1>
             <p>A comprehensive guide for advisors navigating the client experience</p>
+            <a href="Customer_Journey_Guide.pdf" class="download-btn" download>📥 Download PDF Guide</a>
         </div>
     </header>
 
@@ -348,6 +515,7 @@
             <button class="tab-button active" onclick="showTab('generic')">Generic Journey</button>
             <button class="tab-button" onclick="showTab('tern')">Tern Workflows</button>
             <button class="tab-button" onclick="showTab('comparison')">Side by Side</button>
+            <button class="tab-button" onclick="showTab('template')">Blank Template</button>
         </div>
 
         <!-- Generic Customer Journey -->
@@ -820,9 +988,304 @@
                 </ul>
             </div>
         </div>
-    </div>
 
-    <footer>
+        <!-- Blank Template Tab -->
+        <div id="template" class="tab-content">
+            <h2 class="section-title">Advisor Workbook: Trip Planning Template</h2>
+            
+            <div class="template-note">
+                <strong>📋 How to Use:</strong> Fill in this template as you work through each phase of the customer journey. Use this as your personal checklist and reference guide for each client trip.
+            </div>
+
+            <!-- Client Information -->
+            <div class="template-section">
+                <h3>Client Information</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client-name">Client Name(s)</label>
+                        <input type="text" id="client-name" placeholder="Enter client name(s)">
+                    </div>
+                    <div class="form-group">
+                        <label for="client-email">Email Address</label>
+                        <input type="email" id="client-email" placeholder="Enter email">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="client-phone">Phone Number</label>
+                        <input type="text" id="client-phone" placeholder="Enter phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="trip-start">Planned Trip Start Date</label>
+                        <input type="date" id="trip-start">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="trip-details">Trip Details / Preferences</label>
+                    <textarea id="trip-details" placeholder="Destination, budget, special requests, interests, etc."></textarea>
+                </div>
+            </div>
+
+            <!-- Discovery Phase Checklist -->
+            <div class="template-section">
+                <h3>Phase 1: Discovery</h3>
+                <div class="form-group">
+                    <label>Tasks to Complete:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-inquiry">
+                            <label for="task-inquiry">New inquiry received</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-email">
+                            <label for="task-email">Discovery email sent (within 30 min)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-call">
+                            <label for="task-call">Discovery call scheduled</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-invoice">
+                            <label for="task-invoice">Service fee invoice sent (within 48 hrs)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-crm">
+                            <label for="task-crm">Added to CRM & Tern</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-research">
+                            <label for="task-research">Supplier research started</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="discovery-notes">Discovery Call Notes</label>
+                    <textarea id="discovery-notes" placeholder="Key discussion points, client preferences, budget, travel style, special needs..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="discovery-date">Discovery Call Date</label>
+                    <input type="date" id="discovery-date">
+                </div>
+            </div>
+
+            <!-- Proposal Phase Checklist -->
+            <div class="template-section">
+                <h3>Phase 2: Proposal</h3>
+                <div class="form-group">
+                    <label>Tasks to Complete:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-quotes">
+                            <label for="task-quotes">Supplier quotes received</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-proposal">
+                            <label for="task-proposal">Proposal created</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-send">
+                            <label for="task-send">Proposal sent to client</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-insurance">
+                            <label for="task-insurance">Travel insurance quote discussed</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-followup">
+                            <label for="task-followup">Follow-up sent (if needed)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-approved">
+                            <label for="task-approved">Proposal approved by client</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="proposal-date">Proposal Sent Date</label>
+                        <input type="date" id="proposal-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="approval-date">Approval Date</label>
+                        <input type="date" id="approval-date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="proposal-notes">Proposal Notes & Revisions</label>
+                    <textarea id="proposal-notes" placeholder="Any changes requested, revised numbers, insurance details..."></textarea>
+                </div>
+            </div>
+
+            <!-- Booking Phase Checklist -->
+            <div class="template-section">
+                <h3>Phase 3: Booking</h3>
+                <div class="form-group">
+                    <label>Tasks to Complete:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-cc">
+                            <label for="task-cc">CC authorization received</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-flights">
+                            <label for="task-flights">Flights booked</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-hotel">
+                            <label for="task-hotel">Hotel/Accommodations booked</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-activities">
+                            <label for="task-activities">Activities/Tours booked</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-itinerary">
+                            <label for="task-itinerary">Formal itinerary created</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-loyalty">
+                            <label for="task-loyalty">Loyalty programs registered</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="booking-notes">Booking Details & Confirmations</label>
+                    <textarea id="booking-notes" placeholder="Confirmation numbers, booking details, special requests, seat assignments..."></textarea>
+                </div>
+            </div>
+
+            <!-- Pre-Trip Phase Checklist -->
+            <div class="template-section">
+                <h3>Phase 4: Pre-Trip (105 days before to day of trip)</h3>
+                <div class="form-group">
+                    <label>Tasks to Complete:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-confirm">
+                            <label for="task-confirm">Confirmed with suppliers (105 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-requests">
+                            <label for="task-requests">Sent special requests form (90 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-dest">
+                            <label for="task-dest">Destination emails sent</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-final">
+                            <label for="task-final">Final paperwork requested (20 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-final-it">
+                            <label for="task-final-it">Final itinerary sent (14 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-bon">
+                            <label for="task-bon">Bon voyage email sent (48 hrs before)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pretip-notes">Pre-Trip Notes</label>
+                    <textarea id="pretip-notes" placeholder="Special accommodations, visa requirements, important documents, emergency contacts..."></textarea>
+                </div>
+            </div>
+
+            <!-- Post-Trip Phase Checklist -->
+            <div class="template-section">
+                <h3>Phase 5: Post-Trip</h3>
+                <div class="form-group">
+                    <label>Tasks to Complete:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-welcome">
+                            <label for="task-welcome">Welcome home email sent (5-7 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-feedback">
+                            <label for="task-feedback">Feedback survey sent</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-followup1">
+                            <label for="task-followup1">Follow-up #1 sent (30-45 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-followup2">
+                            <label for="task-followup2">Follow-up #2 sent (80-90 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-6month">
+                            <label for="task-6month">6-month check-in sent (180 days)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="task-referral">
+                            <label for="task-referral">Referral program mentioned</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="posttrip-notes">Post-Trip Notes & Feedback</label>
+                    <textarea id="posttrip-notes" placeholder="Client feedback, reviews received, follow-up bookings discussed, referrals mentioned..."></textarea>
+                </div>
+            </div>
+
+            <!-- Tern Workflow Tracking -->
+            <div class="template-section">
+                <h3>Tern Workflow Tracking</h3>
+                <div class="form-group">
+                    <label>Which workflows are active for this trip?</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="workflow-lead">
+                            <label for="workflow-lead">Lead Workflow</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="workflow-planning">
+                            <label for="workflow-planning">Planning Workflow</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="workflow-payments">
+                            <label for="workflow-payments">Payments Workflow</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="workflow-preplannedost">
+                            <label for="workflow-preplannedost">Pre/Post Travel Workflow</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="workflow-notes">Workflow Notes</label>
+                    <textarea id="workflow-notes" placeholder="Automated vs manual tasks, automation status, important dates for triggers..."></textarea>
+                </div>
+            </div>
+
+            <!-- General Notes -->
+            <div class="template-section">
+                <h3>Additional Notes & Action Items</h3>
+                <div class="form-group">
+                    <textarea id="general-notes" placeholder="Any other important information, follow-ups, or action items..."></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="template-btn-group">
+                <button class="template-btn" onclick="printTemplate()">🖨️ Print Template</button>
+                <button class="template-btn secondary" onclick="saveTemplate()">💾 Save Data</button>
+                <button class="template-btn secondary" onclick="clearTemplate()">🗑️ Clear All</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="template-note">
+                <strong>💡 Pro Tips:</strong><br>
+                • Save this page in your browser's local storage to keep your notes<br>
+                • Print this template to keep a physical copy for reference<br>
+                • Update regularly throughout the customer journey<br>
+                • Use this as backup alongside your Tern workflow tracking
+            </div>
+        </div>
+    </div>
         <p>&copy; 2024 Travel Advisor Operations. This guide is for internal use by advisors.</p>
         <p style="margin-top: 15px; font-size: 0.9em;">For questions or updates, contact your operations team.</p>
     </footer>
@@ -842,6 +1305,164 @@
 
             // Add active class to clicked button
             event.target.classList.add('active');
+        }
+
+        // Template Functions
+        function saveTemplate() {
+            const formData = {
+                clientName: document.getElementById('client-name').value,
+                clientEmail: document.getElementById('client-email').value,
+                clientPhone: document.getElementById('client-phone').value,
+                tripStart: document.getElementById('trip-start').value,
+                tripDetails: document.getElementById('trip-details').value,
+                discoveryNotes: document.getElementById('discovery-notes').value,
+                discoveryDate: document.getElementById('discovery-date').value,
+                proposalDate: document.getElementById('proposal-date').value,
+                approvalDate: document.getElementById('approval-date').value,
+                proposalNotes: document.getElementById('proposal-notes').value,
+                bookingNotes: document.getElementById('booking-notes').value,
+                preTripNotes: document.getElementById('pretip-notes').value,
+                postTripNotes: document.getElementById('posttrip-notes').value,
+                workflowNotes: document.getElementById('workflow-notes').value,
+                generalNotes: document.getElementById('general-notes').value,
+            };
+
+            // Save all checkboxes
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                formData[cb.id] = cb.checked;
+            });
+
+            // Save to localStorage
+            const clientName = formData.clientName || 'Template';
+            localStorage.setItem('tripTemplate_' + clientName + '_' + new Date().getTime(), JSON.stringify(formData));
+            
+            alert('✓ Template saved successfully! Your data has been stored in your browser.');
+        }
+
+        function clearTemplate() {
+            if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
+                // Clear all text inputs
+                document.getElementById('client-name').value = '';
+                document.getElementById('client-email').value = '';
+                document.getElementById('client-phone').value = '';
+                document.getElementById('trip-start').value = '';
+                document.getElementById('trip-details').value = '';
+                document.getElementById('discovery-notes').value = '';
+                document.getElementById('discovery-date').value = '';
+                document.getElementById('proposal-date').value = '';
+                document.getElementById('approval-date').value = '';
+                document.getElementById('proposal-notes').value = '';
+                document.getElementById('booking-notes').value = '';
+                document.getElementById('pretip-notes').value = '';
+                document.getElementById('posttrip-notes').value = '';
+                document.getElementById('workflow-notes').value = '';
+                document.getElementById('general-notes').value = '';
+
+                // Clear all checkboxes
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => cb.checked = false);
+
+                alert('All data has been cleared.');
+            }
+        }
+
+        function printTemplate() {
+            // Get client name for filename
+            const clientName = document.getElementById('client-name').value || 'Trip_Template';
+            
+            // Create print window
+            const printWindow = window.open('', '', 'width=800,height=600');
+            
+            // Get all content from template section
+            const templateContent = document.getElementById('template').innerHTML;
+            
+            // Create HTML for print
+            const printHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>${clientName} - Trip Planning Template</title>
+                    <style>
+                        body {
+                            font-family: 'Raleway', Arial, sans-serif;
+                            color: #4A5568;
+                            line-height: 1.6;
+                            margin: 20px;
+                        }
+                        h1, h2, h3 { color: #2B4A6F; }
+                        .template-section {
+                            margin-bottom: 20px;
+                            padding: 15px;
+                            border-left: 3px solid #3EE7C6;
+                            background: #F5F9FB;
+                            page-break-inside: avoid;
+                        }
+                        .form-group {
+                            margin-bottom: 15px;
+                        }
+                        label {
+                            font-weight: bold;
+                            display: block;
+                            margin-bottom: 5px;
+                            color: #2B4A6F;
+                        }
+                        input, textarea, select {
+                            width: 100%;
+                            padding: 8px;
+                            border: 1px solid #D0D0D0;
+                            border-radius: 3px;
+                            font-family: inherit;
+                        }
+                        textarea {
+                            min-height: 80px;
+                        }
+                        .checkbox-group {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 20px;
+                        }
+                        .checkbox-item {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        }
+                        .template-btn-group {
+                            display: none;
+                        }
+                        .divider {
+                            display: none;
+                        }
+                        .template-note {
+                            display: none;
+                        }
+                        .form-row {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 15px;
+                        }
+                        @media print {
+                            body { margin: 10px; }
+                            .template-section { page-break-inside: avoid; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>${clientName} - Trip Planning Workbook</h1>
+                    <p><strong>Printed:</strong> ${new Date().toLocaleDateString()}</p>
+                    <hr>
+                    ${templateContent}
+                </body>
+                </html>
+            `;
+            
+            printWindow.document.write(printHTML);
+            printWindow.document.close();
+            
+            // Wait for content to load then print
+            setTimeout(() => {
+                printWindow.print();
+            }, 250);
         }
     </script>
 </body>
